@@ -29,17 +29,41 @@ async function signin(email, password) {
 }
 
 
-async function signup(name, gender, email, age, password, country) {
-    const connection = await getConnection();
-    const result = await connection.execute("insert into users (name, gender, email, age, password, country) values (:name, :gender, :email, :age, :password, :country)", {
-        name,
-        gender,
-        email,
-        age,
-        password,
-        country
-    })
-    return result
+async function signup(name, gender, email, age, password) {
+    let connection;
+    try {
+        connection = await getConnection();
+
+        const result = await connection.execute(
+            `BEGIN insert_patient('23', 'Krishna', 'F', 'jpcartilla40@gmail.com', 'password', :p_result); END;`,
+            [{ dir: oracledb.BIND_OUT, type: oracledb.CURSOR }],
+            { resultSet: true, outFormat: oracledb.OUT_FORMAT_OBJECT }
+        );
+        const resultSet = await result.outBinds.p_result;
+        console.log(resultSet)
+        if (resultSet) {
+            let row;
+            while ((row = await resultSet.getRow())) {
+                const resultJSON = JSON.parse(row.RESULT);
+                console.log(resultJSON);
+                // Parse JSON and handle accordingly
+            }
+            await resultSet.close();
+        } else {
+            console.error("Result set is undefined");
+        }
+    } catch (error) {
+        console.error(error);
+        // Handle error appropriately
+    } finally {
+        if (connection) {
+            try {
+                await connection.close();
+            } catch (error) {
+                console.error(error);
+            }
+        }
+    }
 }
 
 async function search(searchText, allergies) {
