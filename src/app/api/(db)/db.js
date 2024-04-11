@@ -15,7 +15,7 @@ async function getConnection() {
 
 async function signin(email, password) {
     const connection = await getConnection();
-    const sql = `select * from patient where email = '${email}' and password = '${password}'`
+    const sql = `select * from patients where email = '${email}' and password = '${password}'`
     console.log(sql, email, password)
     const result = await connection.execute(sql, [], { outFormat: oracledb.OUT_FORMAT_OBJECT });
     connection.close();
@@ -30,50 +30,85 @@ async function signin(email, password) {
 
 
 async function signup(name, gender, email, age, password) {
+    console.log(name, gender, email, age, password)
     let connection;
     try {
         connection = await getConnection();
 
+        // Define output cursor
+        let p_result = {
+            type: oracledb.CURSOR,
+            dir: oracledb.BIND_OUT
+        };
+
+        // Call the procedure
+        const params = {
+            p_age: age,
+            p_pname: name,
+            p_gender: gender,
+            p_email: email,
+            p_password: password,
+            p_result: p_result
+        };
+
         const result = await connection.execute(
-            `BEGIN insert_patient('23', 'Krishna', 'F', 'jpcartilla40@gmail.com', 'password', :p_result); END;`,
-            [{ dir: oracledb.BIND_OUT, type: oracledb.CURSOR }],
-            { resultSet: true, outFormat: oracledb.OUT_FORMAT_OBJECT }
+            `BEGIN insert_patient(:p_age, :p_pname, :p_gender, :p_email, :p_password, :p_result); END;`,
+            params
         );
-        const resultSet = await result.outBinds.p_result;
-        console.log(resultSet)
-        if (resultSet) {
-            let row;
-            while ((row = await resultSet.getRow())) {
-                const resultJSON = JSON.parse(row.RESULT);
-                console.log(resultJSON);
-                // Parse JSON and handle accordingly
-            }
-            await resultSet.close();
-        } else {
-            console.error("Result set is undefined");
+
+        // Fetch the output cursor
+        const resultSet = result.outBinds.p_result;
+        let row;
+        let resultData;
+
+        while ((row = await resultSet.getRow())) {
+            resultData = row;
         }
-    } catch (error) {
-        console.error(error);
-        // Handle error appropriately
+
+        // Close the resultSet
+        await resultSet.close();
+        if (resultData.length > 0) {
+            return JSON.parse(resultData[0]);
+        }
+        return {
+            error: "Invalid email or password"
+        };
+
+    } catch (err) {
+        console.error("Error: ", err);
     } finally {
         if (connection) {
             try {
                 await connection.close();
-            } catch (error) {
-                console.error(error);
+            } catch (err) {
+                console.error("Error closing connection: ", err);
             }
         }
     }
 }
 
-async function search(searchText, allergies) {
-    // CALL A STORED PROCESDURE WITH PARAMETERS
+async function search(cancerName) {
     const connection = await getConnection();
-    const result = await connection.execute("BEGIN SEARCH(:searchText, :allergies); END;", {
-        searchText,
-        allergies
-    })
-    return result
+    const sql = `select * from plant where scientific_name like '%${cancerName}%'`
+    console.log(sql)
+    const result = await connection.execute(sql, [], { outFormat: oracledb.OUT_FORMAT_OBJECT });
+    connection.close();
+    const rs = await result.rows;
+    console.log(rs)
+    return rs
 }
 
-export { signin, signup, search }
+async function getVendors(plant) {
+
+    const connection = await getConnection();
+    const sql = `select * from vendors where plant_name = '${plant}'`
+    console.log(sql)
+    const result = await connection.execute(sql, [], { outFormat: oracledb.OUT_FORMAT_OBJECT });
+    connection.close();
+    const rs = await result.rows;
+    console.log(rs)
+    return rs
+}
+
+
+export { signin, signup, search, getVendors }
