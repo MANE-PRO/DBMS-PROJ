@@ -1,13 +1,17 @@
 "use client"
 
 import Nav from '@/components/Nav';
+import SignIn from '@/components/SignIn';
 import Signup from '@/components/Signup';
+import { useFormik } from 'formik';
 import Image from 'next/image';
-import { FC, useEffect } from 'react'
+import { FC, useEffect, useState } from 'react'
 
 type P = {}
 
 const page: FC<P> = () => {
+
+  const [isSignIn, setIsSignIn] = useState(false)
 
   return <div className="bg-gradient-to-br from-green-800 to-green-900 h-[100vh] w-full">
     <Nav />
@@ -20,7 +24,8 @@ const page: FC<P> = () => {
         <Image src={"/signup/background.svg"} height={1000} width={1000} alt="background" />
       </div>
       <div className='w-1/3'>
-        <Signup />
+        { isSignIn ? <Signup /> : <SignIn />}
+        <p className='text-white underline text-center' onClick={() => setIsSignIn(!isSignIn)}>{!isSignIn ? "create a new accout" : "already have an account"}</p>
       </div>
     </div>
   </div>
