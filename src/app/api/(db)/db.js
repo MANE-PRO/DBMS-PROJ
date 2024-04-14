@@ -91,7 +91,7 @@ async function signup(name, gender, email, age, password) {
 
 async function search(cancerName) {
     const connection = await getConnection();
-    const sql = `select * from plant where scientific_name like '%${cancerName}%'`
+    const sql = `select * from plants where scientific_name like '%${cancerName}%'`
     console.log(sql)
     const result = await connection.execute(sql, [], { outFormat: oracledb.OUT_FORMAT_OBJECT });
     connection.close();
@@ -103,7 +103,7 @@ async function search(cancerName) {
 async function getVendors(plant) {
 
     const connection = await getConnection();
-    const sql = `select * from vendors where plant_name = '${plant}'`
+    const sql = `select * from vendors where plants_name = '${plant}'`
     console.log(sql)
     const result = await connection.execute(sql, [], { outFormat: oracledb.OUT_FORMAT_OBJECT });
     connection.close();

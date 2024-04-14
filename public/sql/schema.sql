@@ -50,8 +50,7 @@ VALUES ('Ginger', 2, 'Spice Emporium', '987-654-3210', 'London', '456 High St', 
 
 INSERT INTO vendors (plants_name, sid, sname, sphone, city, street_no, zip, country)
 VALUES ('Aloe vera', 1, 'Herbal Remedies', '123-456-7890', 'New York', '123 Main St', '10001', 'USA');
-
-CREATE OR REPLACE PROCEDURE insert_patients(
+create or replace NONEDITIONABLE PROCEDURE insert_patient(
     p_age IN NUMBER,
     p_pname IN VARCHAR2,
     p_gender IN VARCHAR2,
@@ -65,25 +64,25 @@ IS
 BEGIN
     -- Check if email is valid
     SELECT REGEXP_COUNT(p_email, v_email_regex) INTO v_email_valid FROM dual;
-	DBMS_OUTPUT.PUT_LINE('patients inserted successfully.' || v_email_valid);
+	DBMS_OUTPUT.PUT_LINE('Patient inserted successfully.' || v_email_valid);
     IF v_email_valid = 0 THEN
         -- Invalid email, return error message
         OPEN p_result FOR
             SELECT '{"status": "error", "message": "Invalid email address"}' AS result FROM dual;
     ELSE
         -- Valid email, insert into the table
-        DBMS_OUTPUT.PUT_LINE('Inserting patients ');
+        DBMS_OUTPUT.PUT_LINE('Inserting Patient ');
         INSERT INTO patients(age, pname, gender, email, password)
         VALUES (p_age, p_pname, p_gender, p_email, p_password);
 
         -- Return success message
         OPEN p_result FOR
-            SELECT '{"status": "success", "message": "patients inserted successfully"}' AS result FROM dual;
+            SELECT '{"status": "success", "message": "Patient inserted successfully"}' AS result FROM dual;
     END IF;
 EXCEPTION
     WHEN OTHERS THEN
         OPEN p_result FOR
-    		
-            SELECT '{"status": "error", "message": "An error occurred while inserting the patients"}' AS result FROM dual;
+
+            SELECT '{"status": "error", "message": "An error occurred while inserting the patient"}' AS result FROM dual;
 END;
 /

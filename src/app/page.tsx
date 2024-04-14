@@ -18,12 +18,6 @@ const data = {
 }
 
 export default function Home() {
-  useEffect(() => {
-    // setLocalStorage()
-    axios.post(process.env.NEXT_PUBLIC_BASE_URL + '/api/signin', data).then((res) => {
-      console.log(res)
-    })
-  }, [])
 
   return (
     <Carousel>
