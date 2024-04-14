@@ -9,7 +9,7 @@ export default function SearchResponse() {
         <Nav />
         <div className=' flex justify-center relative '>
             <Image src={'/signup/background.svg'} height={40} width={500} alt='background' className=' absolute ' />
-            <div className='flex justify-between w-full shadow-xl max-w-7xl pt-20 rounded-3xl z-30 bg-gray-50 bg-opacity-20 border-white border relative bottom-4 '>
+            <div className='flex justify-between w-full shadow-xl max-w-7xl pt-20 rounded-3xl z-30 bg-gray-50 bg-opacity-10 border-white border relative bottom-4 '>
                 <Image src={'/search-response/leftImage.svg'} width={500} height={850} alt='response' className='relative z-10 w-1/3 ' />
                 <div className='w-1/3 text-4xl relative z-50 flex flex-col gap-8 text-white right-20 font-bold self-center '>
                     {
