@@ -3,6 +3,7 @@ import Nav from '@/components/Nav';
 import SearchForm from '@/components/ui/SearchForm';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Toaster } from '@/components/ui/toaster';
 import axios from 'axios';
 import { useFormik } from 'formik';
 import Image from 'next/image';
@@ -33,11 +34,12 @@ const Search: FC<P> = () => {
 
   return <div className="bg-gradient-to-br from-green-800 to-green-900 w-full min-h-[110vh]" >
     <Nav />
+    <Toaster />
     <div className=' flex justify-center relative'>
       <Image src={'/signup/background.svg'} height={500} width={500} alt='background' className='absolute' />
       <form onSubmit={handleSubmit} className='flex flex-col gap-5'>
         <div className='flex flex-col gap-10 relative top-10 '>
-          <select onChange={handleChange} name='key' className="p-2 border-white bg-transparent bg-gray-400 rounded-xl px-4 opacity-50 " value={values.key}>
+          <select onChange={handleChange} name='key' className="p-2 border-white bg-gray-400 rounded-xl px-4 opacity-50 " value={values.key}>
               <option value="plant">plant</option>
               <option value="cancer">cancer</option>
           </select>

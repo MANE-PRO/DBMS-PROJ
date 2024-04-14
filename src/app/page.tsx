@@ -11,14 +11,13 @@ import {
 } from "@/components/ui/carousel"
 import { useEffect } from "react";
 import AuthRouter from "@/components/auth/AuthRouter";
-
-const data = {
-  "email": "himanshu@gmail.com",
-  "password": "Himanshu"
-}
+import { useRouter } from "next/navigation";
 
 export default function Home() {
-
+  const router = useRouter()
+  useEffect(() => {
+    router.push('/signup')
+  }, [])
   return (
     <Carousel>
       <CarouselContent className="text-center p-8">

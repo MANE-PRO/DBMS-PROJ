@@ -41,7 +41,7 @@ export default function SearchResponse() {
                                 <CarouselContent className='flex flex-col gap-2 text-xl w-[100vh] '>
                                     {
                                         data.map((d, index) => {
-                                            return <CarouselItem key={index} className='flex flex-col gap-2 text-xl w-full ' >
+                                            return <CarouselItem key={index} className='w-[100vh] flex flex-col gap-2 text-xl ' >
                                                 <div key={index} className='flex flex-col gap-2 text-xl '>
                                                     <p className=' whitespace-nowrap p-1 rounded-full bg-white'></p>
                                                     <p className='whitespace-nowrap'>SCIENTIFIC_NAME: {d?.SCIENTIFIC_NAME || ""}</p>
