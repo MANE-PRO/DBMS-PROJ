@@ -7,19 +7,19 @@ import { useEffect } from "react";
 
 export default function Home() {
 
-  useEffect(()=>{
+  useEffect(() => {
     setLocalStorage()
-  },[])
+  }, [])
   const data = {
-    "email":"himanshu@gmail.com",
-    "password":"Himanshu"
+    "email": "himanshu@gmail.com",
+    "password": "Himanshu"
   }
 
-  useEffect(()=>{
-    axios.post(process.env.NEXT_PUBLIC_BASE_URL+'/api/signin',data).then((res)=>{
+  useEffect(() => {
+    axios.get(process.env.NEXT_PUBLIC_BASE_URL + '/api/search', { headers: { 'Content-Type': 'application/json', 'ngrok-skip-browser-warning': "true" } }).then((res) => {
       console.log(res)
     })
-  },[])
+  }, [])
 
   return (
     <div>

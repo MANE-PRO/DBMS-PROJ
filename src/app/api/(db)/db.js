@@ -1,5 +1,6 @@
 // connect to oracle db 
 const oracledb = require('oracledb');
+const fs = require('fs')
 
 oracledb.autoCommit = true;
 
@@ -21,6 +22,7 @@ async function signin(email, password) {
     connection.close();
     const rs = result.rows;
     if (rs.length > 0) {
+        rs[0].PASSWORD = "ENCRYPTED";
         return rs[0]
     }
     return {
@@ -110,5 +112,19 @@ async function getVendors(plant) {
     return rs
 }
 
+async function syncData() {
+    const connection = await getConnection();
+    const sql = fs.readFileSync('public/sql/schema.sql').toString();
+    await connection.execute(sql, (err, result) => {
+        if (err) {
+            throw err;
+        } else {
+            res.send("Query run successfully");
+        }
 
-export { signin, signup, search, getVendors }
+    });
+    connection.close();
+}
+
+
+export { signin, signup, search, getVendors, syncData }
