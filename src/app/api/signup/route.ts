@@ -1,4 +1,4 @@
-// add a signuo route with email, name, country, age, password
+// add a signup route with email, name, country, age, password
 
 import { NextRequest, NextResponse } from "next/server";
 import { signup } from "../(db)/db";

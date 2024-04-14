@@ -1,11 +1,14 @@
+"use client"
+
 import Nav from '@/components/Nav';
 import Signup from '@/components/Signup';
 import Image from 'next/image';
-import { FC } from 'react'
+import { FC, useEffect } from 'react'
 
 type P = {}
 
 const page: FC<P> = () => {
+
   return <div className="bg-gradient-to-br from-green-800 to-green-900 h-[100vh] w-full">
     <Nav />
     <div className=' flex gap-2 text-white w-full justify-center mx-auto px-10 '>
