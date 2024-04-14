@@ -1,7 +1,7 @@
 import { getSession, signOut } from "next-auth/react";
 import axios from "axios";
 
-const axiosServices = axios.create({ baseURL: process.env.BACKEND_URL });
+const axiosServices = axios.create({ baseURL: process.env.BASE_URL });
 
 // ==============================|| AXIOS - FOR MOCK SERVICES ||============================== //
 
