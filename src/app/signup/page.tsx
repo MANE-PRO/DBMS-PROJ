@@ -3,14 +3,22 @@
 import Nav from '@/components/Nav';
 import SignIn from '@/components/SignIn';
 import Signup from '@/components/Signup';
+import { validateEmail } from '@/util/localSet';
 import { useFormik } from 'formik';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { FC, useEffect, useState } from 'react'
 
 type P = {}
 
 const page: FC<P> = () => {
+  const router = useRouter();
+  
+  console.log(validateEmail())
 
+  if(validateEmail()){
+    router.push("/search");
+  }
   const [isSignIn, setIsSignIn] = useState(false)
 
   return <div className="bg-gradient-to-br from-green-800 to-green-900 h-[100vh] w-full">

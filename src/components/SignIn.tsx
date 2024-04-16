@@ -5,6 +5,7 @@ import { useFormik } from 'formik';
 import axiosServices from '@/util/axios';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
+import { setLocalStorage } from '@/util/localSet';
 
 type P = {}
 
@@ -20,6 +21,7 @@ const SingIn:FC<P> =()=>{
         console.log(res)
         if(Object.keys(res?.data).length == 11){
           localStorage.setItem("user", JSON.stringify(res?.data))
+          setLocalStorage()
           router.push("/search")
         }
       }).catch((err)=>{

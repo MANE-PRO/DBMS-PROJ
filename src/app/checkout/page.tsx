@@ -9,6 +9,7 @@ import { FC } from 'react'
 import { ToastAction } from "@/components/ui/toast"
 import { useToast } from "@/components/ui/use-toast"
 import { Toaster } from '@/components/ui/toaster';
+import { validateEmail } from '@/util/localSet';
 
 type P = {}
 
@@ -28,6 +29,9 @@ const Checkout: FC<P> = () => {
     const vendors: Vendor[] = JSON.parse(searchParams.get("data")!)
     const { toast } = useToast()
     const router = useRouter()
+    if(!validateEmail()){
+        router.push("/signup");
+    }
 
     function createToast() {
         toast({

@@ -13,10 +13,14 @@ import {
 import React from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import axios from 'axios'
+import { validateEmail } from '@/util/localSet'
 
 export default function SearchResponse() {
     const searchParams = useSearchParams();
     const router = useRouter()
+    if(!validateEmail()){
+        router.push("signup");
+    }
 
     const data: { SCIENTIFIC_NAME: string, MEDICINAL_RATING: string, BIOACTIVITY: string }[] = JSON.parse(searchParams.get('data')!)
 
@@ -38,7 +42,7 @@ export default function SearchResponse() {
                         <Image src={'/search-response/leftImage.svg'} width={500} height={850} alt='response' className='relative z-10 w-1/3 ' />
                         <div className='w-1/3 text-4xl relative z-50 flex flex-col gap-8 text-white right-20 font-bold self-center '>
                             <Carousel className="w-full max-w-md">
-                                <CarouselContent className='flex flex-col gap-2 text-xl w-[100vh] '>
+                                <CarouselContent className='flex gap-2 text-xl w-[100vh] '>
                                     {
                                         data.map((d, index) => {
                                             return <CarouselItem key={index} className='w-[100vh] flex flex-col gap-2 text-xl ' >
