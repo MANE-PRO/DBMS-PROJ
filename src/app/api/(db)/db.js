@@ -103,7 +103,7 @@ async function search(cancerName) {
 async function getVendors(plant) {
 
     const connection = await getConnection();
-    const sql = `select * from vendors where plants_name = '${plant}'`
+    const sql = `select * from vendors where plant_name = '${plant}'`
     console.log(sql)
     const result = await connection.execute(sql, [], { outFormat: oracledb.OUT_FORMAT_OBJECT });
     connection.close();

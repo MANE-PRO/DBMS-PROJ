@@ -15,7 +15,7 @@ type P = {}
 
 const Search: FC<P> = () => {
   const router = useRouter()
-  
+
   if (!validateEmail()) {
     router.push("/signup");
   }
@@ -29,7 +29,9 @@ const Search: FC<P> = () => {
       axios.get(process.env.NEXT_PUBLIC_BASE_URL + "/api/search", { params: { [values.key]: values.value } }).then((res) => {
         console.log(res)
         localStorage.setItem("user", JSON.stringify(res?.data))
-        router.push("/search-response?data=" + JSON.stringify(res.data))
+        localStorage.removeItem("search")
+        localStorage.setItem("search", JSON.stringify(res.data))
+        router.push("/search-response")
       }).catch((err) => {
         console.log(err)
       })
@@ -44,10 +46,10 @@ const Search: FC<P> = () => {
       <Image src={'/signup/background.svg'} height={500} width={500} alt='background' className='absolute' />
       <form onSubmit={handleSubmit} className='flex flex-col gap-5'>
         <div className='flex flex-col gap-10 relative top-10 '>
-        <p className='text-7xl text-white text-center'>Search</p>
+          <p className='text-7xl text-white text-center'>Search</p>
           <select onChange={handleChange} name='key' className="p-2 border-white bg-gray-400 rounded-xl px-4 opacity-50 " value={values.key}>
-            <option value="plant">plant</option>
-            <option value="cancer">cancer</option>
+            <option value="plant">Plant</option>
+            <option value="cancer">Cancer</option>
           </select>
           <SearchForm placeholder='search...' value={values.value} name='value' onChange={handleChange} search={false} />
         </div>

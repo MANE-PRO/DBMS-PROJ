@@ -29,7 +29,7 @@ const Checkout: FC<P> = () => {
     const vendors: Vendor[] = JSON.parse(searchParams.get("data")!)
     const { toast } = useToast()
     const router = useRouter()
-    if(!validateEmail()){
+    if (!validateEmail()) {
         router.push("/signup");
     }
 
@@ -58,10 +58,10 @@ const Checkout: FC<P> = () => {
                             vendors.map((obj, index) => {
                                 return <CarouselContent key={index} className='flex flex-col gap-2 text-xl '>
                                     <CarouselItem className='w-[100vh] flex flex-col gap-2 text-xl ' >
-                                        <h1>Check-out</h1>
-                                        <h1>Name of seller: {obj.SNAME}</h1>
-                                        <h1>Phone no: {obj.SPHONE}</h1>
-                                        <h1>Street no: {obj.STREET_NO}</h1>
+                                        <h1>Check Out</h1>
+                                        <h1>Seller : {obj.SNAME}</h1>
+                                        <h1>Contact : {obj.SPHONE}</h1>
+                                        <h1>Address : {obj.CITY} {obj.STREET_NO}</h1>
                                         <Input className='w-2/3' placeholder='Delivery Address' />
                                         <h1>Playment mode: {"Cash on Delivery"}</h1>
                                         <Button

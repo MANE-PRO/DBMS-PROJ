@@ -18,11 +18,11 @@ import { validateEmail } from '@/util/localSet'
 export default function SearchResponse() {
     const searchParams = useSearchParams();
     const router = useRouter()
-    if(!validateEmail()){
+    if (!validateEmail()) {
         router.push("signup");
     }
-
-    const data: { SCIENTIFIC_NAME: string, MEDICINAL_RATING: string, BIOACTIVITY: string }[] = JSON.parse(searchParams.get('data')!)
+    console.log(localStorage.getItem('search'))
+    const data: { SCIENTIFIC_NAME: string, MEDICINAL_RATING: string, BIOACTIVITY: string }[] = JSON.parse(localStorage.getItem('search')!)
 
     function callVendor(plantName: string) {
         axios.get(process.env.NEXT_PUBLIC_BASE_URL + "/api/vendor", { params: { plant: plantName } }).then((res) => {
@@ -48,11 +48,11 @@ export default function SearchResponse() {
                                             return <CarouselItem key={index} className='w-[100vh] flex flex-col gap-2 text-xl ' >
                                                 <div key={index} className='flex flex-col gap-2 text-xl '>
                                                     <p className=' whitespace-nowrap p-1 rounded-full bg-white'></p>
-                                                    <p className='whitespace-nowrap'>SCIENTIFIC_NAME: {d?.SCIENTIFIC_NAME || ""}</p>
-                                                    <p className='whitespace-nowrap'>MEDICINAL_RATING: {d?.MEDICINAL_RATING || ""}</p>
-                                                    <p className='whitespace-nowrap'>BIOACTIVITY: {d?.BIOACTIVITY || ""}</p>
+                                                    <p className='whitespace-nowrap'>Scientific Name: {d?.SCIENTIFIC_NAME || ""}</p>
+                                                    <p className='whitespace-nowrap'>Medicinal Rating: {d?.MEDICINAL_RATING || ""}</p>
+                                                    <p className='whitespace-nowrap'>Bio Activity: {d?.BIOACTIVITY || ""}</p>
                                                 </div>
-                                                <Button onClick={()=>callVendor(d?.SCIENTIFIC_NAME)} className='text-2xl font-bold bg-white w-fit text-black p-1 px-3 opacity-100 '>Buy Now</Button>
+                                                <Button onClick={() => callVendor(d?.SCIENTIFIC_NAME)} className='text-2xl font-bold bg-white w-fit text-black p-1 px-3 opacity-100 '>Buy Now</Button>
                                             </CarouselItem>
                                         })
                                     }

@@ -22,8 +22,6 @@ export default function Home() {
     <Carousel>
       <CarouselContent className="text-center p-8">
         <CarouselItem>Himanshu</CarouselItem>
-        <CarouselItem>Akhil</CarouselItem>
-        <CarouselItem>Aman</CarouselItem>
       </CarouselContent>
       <CarouselPrevious />
       <CarouselNext />
